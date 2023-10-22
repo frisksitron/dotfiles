@@ -1,0 +1,41 @@
+# Set Zsh options
+setopt AUTO_CD          # Change directory just by typing its name
+setopt EXTENDED_GLOB    # Enable extended globbing syntax
+
+# Command history settings
+HISTFILE=~/.zsh_history
+HISTSIZE=1000
+SAVEHIST=1000
+
+# Autocomplete settings
+autoload -Uz compinit
+compinit
+zstyle ':completion:*' auto-description 'specify: %d'
+zstyle ':completion:*' completer _expand _complete _approximate
+zstyle ':completion:*' format 'Completing %d'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' menu select=2
+zstyle ':completion:*' use-compctl false
+zstyle ':completion:*' verbose true
+
+# Prompt
+PROMPT='%n@%m %~ %# '
+
+# Aliases
+alias ll='ls -lAh'
+alias la='ls -A'
+alias l='ls -CF'
+alias tm='tmux attach-session -t $(basename $(pwd)) 2>/dev/null || tmux new-session -s $(basename $(pwd))'
+
+# NVM setup
+export NVM_DIR="$HOME/.nvm"
+[[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh"
+
+# Custom paths
+custom_paths=(
+  "$HOME/scripts"
+  "$HOME/.local/share/bob/nvim-bin"
+)
+
+export PATH="$PATH:$(IFS=":"; echo "${custom_paths[*]}")"
+
